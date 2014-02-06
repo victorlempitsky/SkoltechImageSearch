@@ -12,5 +12,7 @@ elseif strcmp(out(1:7),'iceberg')
     datapath = '/home/m273/SkVisual/Data';
 elseif strcmp(out(1:5), 'medan')
     datapath = '/Users/mikhail/Projects/SkoltechImageSearch/';
-end  %insert your computer names here using elseif (mind the trailing symbol!)
+elseif strcmp (out(1:10), 'ehsans-mbp')
+    datapath = '/Users/ehsanulhaq/Development/compVision/SkoltechImageSearch/';
+end %insert your computer names here using elseif (mind the trailing symbol!)
     
