@@ -5,6 +5,10 @@ f = imread('/mnt/Data/taster/fragment2.png');
 med_f = median(reshape(f, [], 1));
 [m, n, l] = size(f);
 
+% set of pictures that match well
+matches = {};
+mt = 0;
+
 % path to folders
 datapath = '/mnt/Images/';
 % datapath = './';
@@ -33,7 +37,7 @@ for i = 1:numel(folders)
                 i1 = randi(size(f,1));
                 i2 = randi(size(f,2));
                 i3 = randi(size(f,3));
-                % compare pixels at random positions against median
+                
                 b1 = f(i1,i2,i3) <= med_f;
                 b2 = imf(i1,i2,i3) <= med_im;
                 if b1 + b2 == 1 % if images has "different" pixel
