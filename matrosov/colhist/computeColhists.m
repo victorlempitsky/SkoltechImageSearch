@@ -1,12 +1,8 @@
-% computeMeans();
-
-load('means');
-
 hlist = holidaysList();
-encodings = [];
+colhists = [];
 
 % computing VLAD
-fprintf('Computing VLAD\n');
+fprintf('Computing colhists\n');
 for i=1:numel(hlist)
     fname = hlist{i};
     try
@@ -22,8 +18,7 @@ for i=1:numel(hlist)
         img = rgb2gray(img);
     end
     
-    e%ncodings(:,end+1) = getByteho(img, means);
-    encodings(:,end+1) = getVLAD(img, means);
+    colhists(:,end+1) = colhist(img, 4);
     
     % print progress
     if(mod(i,10)==0)
@@ -35,6 +30,6 @@ for i=1:numel(hlist)
     end
 end
 
-%save('encodingsBH', 'encodings');
-save('encodings', 'encodings');
+save('colhists', 'colhists');
+%save('encodings', 'encodings');
 
