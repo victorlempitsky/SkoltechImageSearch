@@ -1,4 +1,4 @@
-load('colhists');
+load('../data/colhists4');
 hlist = holidaysList();
 
 while 1
@@ -11,9 +11,9 @@ distances = query(img, colhists);
 h = colhist(img, 4);
 
 %figure;
-subplot(2,3,1); imshow(img);
-for i=2:6
-    subplot(2,3,i); imshow(imread(hlist{ix(i-1)}));
+subplot(3,4,1); imshow(img);
+for i=2:12
+    subplot(3,4,i); imshow(imread(hlist{ix(i-1)}));
 end
 
 pause(1.5);

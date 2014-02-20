@@ -1,4 +1,4 @@
-load('colhists');
+load('../data/colhists32');
 hlist = holidaysList();
 N = numel(hlist);
 
@@ -19,3 +19,6 @@ distances = vl_alldist2(colhists, colhists);
 plot(recall, precision);
 xlabel('Recall');
 ylabel('Precision');
+mAP = trapz(recall, precision);
+
+fprintf('For color histogram mAP = %.4f\n', mAP);

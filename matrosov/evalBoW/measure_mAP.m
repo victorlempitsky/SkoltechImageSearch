@@ -1,5 +1,5 @@
 if ~exist('sifts')
-    load('clusterizations');
+    load('../data/clusterizations256');
     load('../data/sifts');
     hlist = holidaysList();
 end
@@ -19,11 +19,18 @@ end
 
 for i=1:numel(clusterizations)
     encodings = computeEncodings(sifts, clusterizations{i});
+    encodings = tf_normalize(encodings);
+    for e=1:size(encodings,1)
+        v = encodings(:,e);
+        encodings(:,e) = v/norm(v);
+    end
+    
     distances = vl_alldist2(encodings, encodings);
     [recall, precision] = vl_pr(labels(:)-0.5, -distances(:));
-    mAP = trapz(recall, precision);
     
+    mAP = trapz(recall, precision);
     mAPs(i)=mAP;
+    
     save('mAPS', 'mAPs');
-    fprintf('Clusterization #%d is done! mAP=%.4f\n', i, mAP);
+    fprintf('#%i mAP=%.4f\n', i, mAP);
 end
