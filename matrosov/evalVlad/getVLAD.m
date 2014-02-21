@@ -18,6 +18,7 @@ assignments = zeros(size(distances));
 assignments(sub2ind(size(assignments), ix, 1:size(assignments,2))) = 1;
 
 enc = vl_vlad(double(descriptors), double(means), assignments);
+%enc = sqrt(abs(enc)).*sign(enc);
 
 end
 

@@ -1,13 +1,23 @@
-load('sifts');
+load('clusterizations');
+load('/mnt/Data/SIFTs/Holidays');
 
 for i=1:numel(sifts)
     d = sifts{i};
-    
-    d = single(d);
-    d = bsxfun(@times, d, 1./sum(abs(d)));
-    d = sqrt(d);
+    d = single(d)-127;
+    d = sign(d).*sqrt(abs(d));
+    d = int8(d*12);
     
     sifts{i} = d;
 end
 
-save('sqrtSifts', 'sifts', '-v7.3');
+for i=1:numel(clusterizations)
+    d = clusterizations{i};
+    d = single(d)-127;
+    d = sign(d).*sqrt(abs(d));
+    d = int8(d*12);
+    
+    clusterizations{i} = d;
+end
+
+save('rootsifts', 'sifts');
+save('rootclusterizations', 'clusterizations');

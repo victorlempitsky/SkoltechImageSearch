@@ -1,6 +1,6 @@
 if ~exist('sifts')
-    load('../data/clusterizations256');
-    load('../data/sifts');
+    load('../data/clusterizations1024');
+    load('/mnt/Data/SIFTs/Holidays');
     hlist = holidaysList();
 end
 
