@@ -1,6 +1,6 @@
 function [ imgs ] = holidaysList( )
 
-imgsdir = '/mnt/Images/Holidays';
+imgsdir = '../../imgs';
 
 dirlist = dir(imgsdir);
 imgs={};
