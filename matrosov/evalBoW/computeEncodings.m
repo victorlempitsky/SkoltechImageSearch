@@ -3,7 +3,6 @@ function [encodings] = computeEncodings(sifts, means)
 encodings = [];
 
 % computing VLAD
-fprintf('Computing BoW\n');
 for i=1:numel(sifts)
     encodings(:,end+1) = getBoW(sifts{i}, means);
     

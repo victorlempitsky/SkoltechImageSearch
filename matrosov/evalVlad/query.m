@@ -8,8 +8,7 @@ if size(img,3)==3
     img = rgb2gray(img);
 end
 
-%enc = getVLAD(img, means);
-enc = getByteho(img, means);
+enc = getVLADFromImg(img, means);
 
 distances = vl_alldist2(enc, encodings);
 

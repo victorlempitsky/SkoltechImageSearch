@@ -1,10 +1,10 @@
-N_IMAGES = 1200;
-N_SIFTS_PER_IMG = 200;
-CODEBOOK_SIZE = 4096;
+N_IMAGES = 1000;
+N_SIFTS_PER_IMG = 50;
+CODEBOOK_SIZE = 256;
 N_ATTEMPTS_TO_CLASTERIZE = 10;
 
 if ~exist('sifts')
-    load('../data/sifts');
+    load('../data/rootsifts');
 end
 
 clusterizations = {};
@@ -38,6 +38,6 @@ for attempt=1:N_ATTEMPTS_TO_CLASTERIZE
     end
 end
 
-save('../data/clusterizations4096', 'clusterizations');
+save('../data/rootclusterizations256', 'clusterizations');
 %save('clusterCentersIDs', 'clusterCentersIDs');
 

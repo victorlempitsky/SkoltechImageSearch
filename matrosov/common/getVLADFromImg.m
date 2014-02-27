@@ -1,5 +1,6 @@
 function [ enc ] = getVLADFromImg( img, means )
-    [~,descriptors] = vl_sift(single(img));
-    enc = getVLAD(descriptors, means);
+    [~,d] = vl_sift(single(img));
+    d = uint8(sqrt(single(d))*16);
+    enc = getVLAD(d, means);
 end
 

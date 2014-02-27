@@ -1,9 +1,8 @@
 function [encodings] = computeEncodings(sifts, means)
 
-encodings = [];
+encodings = int8([]);
 
 % computing VLAD
-fprintf('Computing VLAD\n');
 for i=1:numel(sifts)
     encodings(:,end+1) = getVLAD(sifts{i}, means);
     

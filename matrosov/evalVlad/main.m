@@ -1,11 +1,12 @@
 if ~exist('sifts')
+    addpath('../common');
     %load('/mnt/Data/SIFTs/Holidays');
-    load('../../sifts');
-    load('../../clusterizations');
-    load('holidaysLabels');
+    load('../data/rootsifts');
+    %load('../data/clusterizations');
+    load('../data/rootclusterizations');
+    load('../data/holidaysLabels');
 end
 
-N = numel(hlist);
 mAPs=[];
 
 for i=1:numel(clusterizations)
