@@ -2,8 +2,7 @@ siftsdir = '/mnt/Data/RootSIFTs';
 vladsdir = '/mnt/Data/VLADs';
 imgsdir  = '/mnt/Images';
 
-addpath('../common');
-load('/mnt/Data/VLADs/clusters');
+load([vladsdir,'/clusters']);
 
 for dirNumber = 1:100
     dirlist = dir(sprintf('%s/%d', siftsdir, dirNumber));

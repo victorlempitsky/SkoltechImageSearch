@@ -1,4 +1,4 @@
-load('/mnt/Data/arutar/HASH/sifts.mat');
+load('/mnt/Data/arutar/HASH/rootsifts.mat');
 
 N = size(sifts, 2);
 
@@ -11,4 +11,4 @@ d = sqrt(d);
 clusters = vl_ikmeans(uint8(d*450), 64);
 clusters = single(clusters)/450;
 
-save('/mnt/Data/RootVLADs/clusters', 'clusters');
+save('/mnt/Data/VLADs/clusters', 'clusters');

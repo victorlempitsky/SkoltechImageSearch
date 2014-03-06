@@ -10,7 +10,8 @@ while 1
     fname = filenames{ceil(N*rand())};
     img = imread(['/mnt/Images/', fname]);
     
-    distances = query( img, clusters, encodings );
+    enc = getVLADFromImg(img, clusters);
+    distances = vl_alldist2(enc, encodings);
     
     [distances,ix] = sort(distances);
     

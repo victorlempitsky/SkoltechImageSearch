@@ -1,6 +1,6 @@
 function [encodings] = computeEncodings(sifts, means)
 
-encodings = int8([]);
+encodings = [];
 
 % computing VLAD
 for i=1:numel(sifts)

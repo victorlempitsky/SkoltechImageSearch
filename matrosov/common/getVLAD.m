@@ -14,7 +14,7 @@ assignments = zeros(size(distances));
     %assignments(:,j) = v;
 %end
 
-[~,ix] = max(distances);
+[~,ix] = min(distances);
 assignments(sub2ind(size(assignments), ix, 1:size(assignments,2))) = 1;
 
 enc = vl_vlad(double(descriptors), double(means), assignments);
