@@ -22,7 +22,7 @@ while 1
     [ pqpca, pca, vlad, sifts ] = getPqPcaVladFromImg( img, ...
     clusters, adaptedCenters, coeff, pqClusters, pqRotation );
 
-    distances = getPqDistance(pqpca, pqPcaEncodings, pqDistances);
+    distances = pq_alldist(pqpca, pqPcaEncodings, pqDistances);
     
     [distances,ix] = sort(distances);
     
