@@ -1,4 +1,4 @@
-% usage: "query='imgs/1/123.456.jpg'; backend;"
+% usage: "query='imgs/1/123.456.jpg'; output='output.txt'; backend;"
 
 MAX_IMG_SIZE = 1024;
 
@@ -39,6 +39,6 @@ distances = pq_alldist(pqpca, pqPcaEncodings, pqDistances);
 toc;
 
 % write result
-fd = fopen('output.txt', 'w');
+fd = fopen(output, 'w');
 fprintf(fd, '/mnt/Images/%s\n', filenames{ix(1:5)});
 fclose(fd);
