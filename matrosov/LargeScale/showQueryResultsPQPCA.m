@@ -34,5 +34,5 @@ while 1
         subplot(H,W,i); imshow(img);
     end
     
-    pause(2);
+    pause(1);
 end
