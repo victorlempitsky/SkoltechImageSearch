@@ -1,15 +1,17 @@
 if ~exist('pqPcaEncodings')
-    load ('/mnt/Data/VLADs/filenamesAll')
+    %load ('/mnt/Data/VLADs/filenamesAll')
+    load ('/mnt/Data/VLADs/filenamesAllPlusHolidays')
     load ('/mnt/Data/VLADs/clusters')
     load ('/mnt/Data/VLADs/clustersAdaptedCenters')
     load ('/mnt/Data/VLADs/pca')
-    load ('/mnt/Data/VLADs/pqPcaEncodings')
+    %load ('/mnt/Data/VLADs/pqPcaEncodings')
+    load ('/mnt/Data/VLADs/pqPcaEncodingsAllPlusHolidays')
     load ('/mnt/Data/VLADs/pqClusters')
     load ('/mnt/Data/VLADs/pqDistances')
     load ('/mnt/Data/VLADs/pqRotation')
 end
 
-N = numel(filenames);
+N = 1491;%numel(filenames);
 W = 4;
 H = 3;
 

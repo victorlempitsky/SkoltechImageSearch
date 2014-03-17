@@ -4,7 +4,7 @@ MAX_IMG_SIZE = 1024;
 
 tic;
 
-if ~exist('pqPcaEncodings')
+if ~exist('pqPcaEncodings', 'var')
     load ('/mnt/Data/VLADs/filenamesAll')
     load ('/mnt/Data/VLADs/clusters')
     load ('/mnt/Data/VLADs/clustersAdaptedCenters')
