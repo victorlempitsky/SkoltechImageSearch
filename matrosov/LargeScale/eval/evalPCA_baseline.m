@@ -6,7 +6,8 @@ APs=[];
 tic;
 
 for i=1:1491
-    distances = vl_alldist2(encodings(:,i), encodings);
+    distances = vl_alldist2(encodings(:,i), encodings); % euclidian
+    %distances = -encodings(:,i)' * encodings; % dotprod
 
     [recall, precision] = vl_pr(labels(i,:)*2-1, -distances);
     AP = trapz(recall, precision);

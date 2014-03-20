@@ -36,3 +36,11 @@ end
 fprintf('\nMean = %.4f\n', mean(APs));
 
 toc;
+
+
+tic;
+for i=1:100
+    [recall, precision] = vl_pr(labels(i,:)*2-1, -distances);
+    AP = trapz(recall, precision);
+end
+toc
