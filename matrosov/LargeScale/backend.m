@@ -1,4 +1,4 @@
-% usage: "query='imgs/1/123.456.jpg'; output='output.txt'; backend;"
+% usage: "query='imgs/1/123.456.jpg'; output='output.txt'; backend; result"
 
 N_RESULTS = 10;
 
@@ -32,6 +32,4 @@ fprintf('Processed %d images.\n', n_queries);
 toc;
 
 % write result
-fd = fopen(output, 'w');
-fprintf(fd, '/mnt/Images/%s\n', filenames{ix(1:10)});
-fclose(fd);
+result = sprintf('/mnt/Images/%s\n', filenames{ix(1:10)});

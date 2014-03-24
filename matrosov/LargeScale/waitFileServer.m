@@ -2,23 +2,30 @@
 % down ... after it is idle... = false;
 % Run parpool(8) before running this script!
 
-LOCK_FILE = 'lock';
-QUERY_FILE = 'query.txt';
-OUTPUT = 'output.txt';
+INPUT_LOCK = 'input.lock';
+INPUT_FILE = 'input.txt';
+OUTPUT_LOCK = 'output.lock';
+OUTPUT_FILE = 'output.txt';
 
-fprintf('Server started on port %i\n', LOCAL_PORT);
+fprintf('Server started.\n');
 
 while 1
     try
-        if exist(LOCK_FILE, 'file')
+        if exist(INPUT_LOCK, 'file')
             c = clock;
             fprintf('%i-%02i-%02i %02i:%02i:%02i\n', ...
                 c(1), c(2), c(3), c(4), c(5), floor(c(6)));
             
-            query = fileread(QUERY_FILE);
+            query = fileread(INPUT_FILE);
             output = OUTPUT;
             backend;
-            delete(LOCK_FILE);
+            
+            fd = fopen(output, 'w');
+            fprintf(fd, '%s', result);
+            fclose(fd);
+            
+            delete(INPUT_LOCK);
+            fclose(fopen(OUTPUT_LOCK, 'w'));
         end
     catch err
         err
