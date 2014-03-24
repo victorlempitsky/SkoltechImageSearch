@@ -1,6 +1,6 @@
 % usage: "query='imgs/1/123.456.jpg'; output='output.txt'; backend;"
 
-MAX_IMG_SIZE = 1024;
+N_RESULTS = 10;
 
 tic;
 
@@ -13,32 +13,25 @@ if ~exist('pqPcaEncodings', 'var')
     load ('/mnt/Data/VLADs/pqClusters')
     load ('/mnt/Data/VLADs/pqDistances')
     load ('/mnt/Data/VLADs/pqRotation')
+    toc;
 end
 
-toc;
+queries = strsplit(query, '\n');
 
-img = imread(query);
+n_queries = numel(queries)-1;
+ranks = spalloc(n_queries, size(pqPcaEncodings,2), n_queries*N_RESULTS);
 
-% resize img if necessary
-sz = size(img);
-sz = sz([1,2]);
-if sz(1)>MAX_IMG_SIZE || sz(1)>MAX_IMG_SIZE
-    img = imresize(img, 1024.0/max(sz));
+parfor i=1:n_queries
+    ranks(i,:) = backendNotParallel (queries{i}, ...
+    pqPcaEncodings, clusters, adaptedCenters, coeff, pqClusters, pqRotation, N_RESULTS)
 end
 
-% get encoding
-[ pqpca, pca, vlad, sifts ] = getPqPcaVladFromImg( img, ...
-clusters, adaptedCenters, coeff, pqClusters, pqRotation );
+[ranks,ix] = sort(max(ranks), 'descend');
 
-% measure distances
-distances = pq_alldist(pqpca, pqPcaEncodings, pqDistances);
-
-% rank
-[distances,ix] = sort(distances);
-
+fprintf('Processed %d images.\n', n_queries);
 toc;
 
 % write result
 fd = fopen(output, 'w');
-fprintf(fd, '/mnt/Images/%s\n', filenames{ix(1:5)});
+fprintf(fd, '/mnt/Images/%s\n', filenames{ix(1:10)});
 fclose(fd);

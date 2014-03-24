@@ -3,7 +3,10 @@
 % command 'clear' will clear everything except the server,
 % command 'clear all' will also shutdown the server.
 
-tcpsocket = tcpip('0.0.0.0', 25771, 'NetworkRole', 'server');
+LOCAL_PORT = 25771;
+
+tcpsocket = tcpip('0.0.0.0', LOCAL_PORT, 'NetworkRole', 'server');
+fprintf('Server started on port %i\n', LOCAL_PORT);
 
 fopen(tcpsocket);
 
@@ -32,7 +35,14 @@ while 1
         catch err
             err
         end
+        
+        % reopen tcp
+        fclose(tcpsocket);
+        tcpsocket = tcpip('0.0.0.0', LOCAL_PORT, 'NetworkRole', 'server');
+        fopen(tcpsocket);
     end
+    
+    pause(0);
 end
 
 fprintf('Server has been shut down\n');

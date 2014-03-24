@@ -5,7 +5,7 @@ if ~exist('pqPcaEncodings')
     load ('/mnt/Data/VLADs/clustersAdaptedCenters')
     load ('/mnt/Data/VLADs/pca')
     %load ('/mnt/Data/VLADs/pqPcaEncodings')
-    load ('/mnt/Data/VLADs/pcaEncodingsAllPlusHolidays')
+    load ('/mnt/Data/VLADs/pqPcaEncodingsAllPlusHolidays')
     load ('/mnt/Data/VLADs/pqClusters')
     load ('/mnt/Data/VLADs/pqDistances')
     load ('/mnt/Data/VLADs/pqRotation')
@@ -25,7 +25,7 @@ while 1
     [ pqpca, pca, vlad, sifts ] = getPqPcaVladFromImg( img, ...
     clusters, adaptedCenters, coeff, pqClusters, pqRotation );
 
-    distances = vl_alldist2(pca, encodings);
+    distances = pq_alldist(pqpca, pqPcaEncodings, pqDistances);
     
     [distances,ix] = sort(distances);
     
