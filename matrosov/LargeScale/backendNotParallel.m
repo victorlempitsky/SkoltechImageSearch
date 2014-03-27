@@ -1,5 +1,5 @@
 function ranks = backendNotParallel (query, ...
-    pqPcaEncodings, clusters, adaptedCenters, coeff, pqClusters, pqRotation, N_RESULTS)
+    pqPcaEncodings, encodings, clusters, adaptedCenters, coeff, pqClusters, pqRotation, N_RESULTS)
 
 MAX_IMG_SIZE = 1024;
 N = size(pqPcaEncodings,2);
@@ -42,14 +42,25 @@ end
 
 distances = sum(subDistances, 2);
 
+[~,ix] = sort(distances);
+
+encs = encodings(:,ix(1:1000));
+distances2 = vl_alldist2(pca, encs);
+
+[dd, ix2] = sort(distances2);
+
+ranks = zeros(size(distances));
+ranks(ix(ix2(1:N_RESULTS))) = 1./dd(1:N_RESULTS);
+
 %distances = vl_alldist2(pca, pcaEncodings);
 
 % rank
-[distances,ix] = sort(distances);
+%[distances,ix] = sort(distances);
 
-ranks = spalloc(1, N, N_RESULTS);
-ranks( ix(1:N_RESULTS) ) = 1./distances(1:N_RESULTS);
-ranks( N ) = max(ranks(N), 1e-9); % workaround wrong dim size
+%ranks = 1./distances; 
+%ranks = spalloc(1, N, N_RESULTS);
+%ranks( ix(1:N_RESULTS) ) = 1./distances(1:N_RESULTS);
+%ranks( N ) = max(ranks(N), 1e-9); % workaround wrong dim size
 
 end
 
