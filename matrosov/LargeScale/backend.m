@@ -10,6 +10,7 @@ if ~exist('pqPcaEncodings', 'var')
     load ('/mnt/Data/VLADs/clustersAdaptedCenters')
     load ('/mnt/Data/VLADs/pca')
     load ('/mnt/Data/VLADs/pqPcaEncodings')
+    %load('/mnt/Data/VLADs/pcaEncodingsAllPlusHolidays.mat')
     load ('/mnt/Data/VLADs/pqClusters')
     load ('/mnt/Data/VLADs/pqDistances')
     load ('/mnt/Data/VLADs/pqRotation')
@@ -22,10 +23,15 @@ n_queries = numel(queries)-1;
 ranks = spalloc(n_queries, size(pqPcaEncodings,2), n_queries*N_RESULTS);
 
 parfor i=1:n_queries
-    ranks(i,:) = backendNotParallel (queries{i}, ...
-    pqPcaEncodings, clusters, adaptedCenters, coeff, pqClusters, pqRotation, N_RESULTS)
+    try
+        ranks(i,:) = backendNotParallel (queries{i}, ...
+        pqPcaEncodings, clusters, adaptedCenters, coeff, pqClusters, pqRotation, N_RESULTS)
+    catch err
+        fprintf('Couldn''t process img "%s"\n', queries{i});
+    end
 end
 
+ranks = full(ranks);
 [ranks,ix] = sort(max(ranks), 'descend');
 
 fprintf('Processed %d images.\n', n_queries);

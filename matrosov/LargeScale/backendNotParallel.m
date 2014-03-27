@@ -4,7 +4,14 @@ function ranks = backendNotParallel (query, ...
 MAX_IMG_SIZE = 1024;
 N = size(pqPcaEncodings,2);
 
-img = imread(query);
+try
+    img = imread(query);
+catch err
+    ranks = spalloc(1, N, 1);
+    ranks(N) = 0;
+    fprintf('Couldn''t open img "%s"\n', query);
+    return
+end
 
 % resize img if necessary
 sz = size(img);
@@ -35,12 +42,14 @@ end
 
 distances = sum(subDistances, 2);
 
+%distances = vl_alldist2(pca, pcaEncodings);
+
 % rank
 [distances,ix] = sort(distances);
 
 ranks = spalloc(1, N, N_RESULTS);
 ranks( ix(1:N_RESULTS) ) = 1./distances(1:N_RESULTS);
-ranks( N ) = max(ranks(N), 0); % workaround wrong dim size
+ranks( N ) = max(ranks(N), 1e-9); % workaround wrong dim size
 
 end
 
