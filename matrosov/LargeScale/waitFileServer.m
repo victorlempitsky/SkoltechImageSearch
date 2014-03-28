@@ -17,7 +17,7 @@ while 1
                 c(1), c(2), c(3), c(4), c(5), floor(c(6)));
             
             query = fileread(INPUT_FILE);
-            output = OUTPUT;
+            output = OUTPUT_FILE;
             backend;
             
             fd = fopen(output, 'w');
