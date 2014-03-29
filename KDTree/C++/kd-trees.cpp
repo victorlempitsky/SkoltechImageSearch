@@ -1,4 +1,6 @@
 // kd-trees.cpp : Defines the entry point for the console application.
+// working code for conventional kd-trees 
+// connection to matlab not finished and is in the sepatate file
 //
 
 #include "stdafx.h"
