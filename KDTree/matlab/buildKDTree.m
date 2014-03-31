@@ -2,6 +2,8 @@ function [ tree ] = buildKDTreeV4(aSet, indSet)
 % creates a kd-tree for the input set aSet
 % aSet: the set of points to construct the kd-tree
 % aSet row - a point of the set
+%
+%
 
 %    aSet = unique(aSet, 'rows');
     [setRows, setDims] = size(aSet);

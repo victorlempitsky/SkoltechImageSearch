@@ -1,0 +1,35 @@
+<style>
+    #results {
+        width: 200;
+        height: 200;
+    }
+</style>
+
+<a href='/'><img src="/mnt/static/box_logo.jpg" alt="Box Image"/></a>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'box:search' %}" method="post">
+{% csrf_token %}
+	<input type="text" name="box" id="box" size="40" value="{{ query }}" />
+	<input type="submit" value="Search" />
+	<br><br>You want to use:<br><br>
+	<input type="radio" name="methods" value="1" {% if method == "1" %} checked {% endif %}>
+	Similarity Search (PQ+PCA+VLAD)<br>
+	<input type="radio" name="methods" value="2" {% if method == "2" %} checked {% endif %}>
+	Duplicate Search (Min Hash)<br>
+	<input type="radio" name="methods" value="3" {% if method == "3" %} checked {% endif %}>
+	Improved Similarity Search (Exact Nearest Neighbor)<br>
+	<input type="radio" name="methods" value="4" {% if method == "4" %} checked {% endif %}>
+	Face Identification (Fisher Vectors)<br>
+</form>
+
+<h1 id="prompt">You search for <i>{{ query }}</i></h1>
+<br>
+<span width="100" style="position: absolute; left: 75">Yandex</span>
+<span width="100" style="position: absolute; left: 75">BEST8</span><br>
+{% for url, pic in url_pic %}
+    <img id="results" src="{{url}}" alt="URL" />
+	<img id="results" src="{{pic}}" alt="Duplicate" />
+	<br>
+{% endfor %}
