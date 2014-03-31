@@ -24,4 +24,4 @@ for i=3*N/4+1:N
     end
 end
 
-save('minDist4', minDist);
+save('minDist4', 'minDist');
