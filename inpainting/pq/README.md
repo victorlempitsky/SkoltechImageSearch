@@ -11,3 +11,5 @@ pyrBleding
 genPyramids gets two origional image and one custom image with black and white portions and generates the blended image.
 
 The PQ is the modified version of the code given by  INRIA 2009-2011 that uses yeal Library package, this implementation does not require the yeal Library.
+______
+Torrolba's package was used to compute GIST features. 
