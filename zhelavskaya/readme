@@ -1,0 +1,62 @@
+This subproject is about face verification using Fisher vectors on the dataset "Labeled Faces in the Wild". The approach is described in a paper:
+[1] "Fisher Vector Faces in the Wild", K Simonyan, 2013.
+http://www.robots.ox.ac.uk/~vgg/publications/2013/Simonyan13/
+
+You can download the dataset "Labeled faces in the wild" here:
+[2] http://vis-www.cs.umass.edu/lfw/
+
+The query pipeline is the following:
+	1[Image --> Crop image --> Extract and normalize image of a face] --> 2[Compute dense SIFTs --> Conduct PCA --> Train GMMs --> Compute Fisher vectors --> Learn the metrics]
+
+SIFT - Scale Invariant Feature Transformation
+PCA - Principal Component Analisys
+
+My subpart was devoted to the second part of the pipeline (it is marked with 2[*]).
+
+
+Dependencies:
+	vl_feat (vlfeat.org) - Matlab CV library
+	
+
+Below is description of the project's structure.
+
+
+./backend - folder containing all files required for web part of search engine.
+
+	backendNotParallel_faces.m - takes url or filename of an image as a query and returns ranks for each image. 
+	backend4.m - parallel part of the search engine. Takes bunch of query urls and returns overall ranks.
+	tcpserver.m - tcp server that enables matlab to be queried via local ports. Useful for coupling Matlab with python, java or whatever (function written by M. Matrosov).
+	waitFileServer.m - similar to tcp server, except that it uses local temporary files to couple with other applications (function written by M. Matrosov).
+	init.m - initializing the parameters of Viola face detector (function written by B. Urman).	extractfaces.m - extract and normalize images of faces (function written by B. Urman).	extract_sifts.m - extract SIFTs densely. Here we obtain ~26K 128-dimensional descriptors per face.
+	get_sifts.m - get SIFTs for one face using extract_sifts.m.
+	apply_pca.m - apply the pretrained matrix of PCA to SIFTs.	encode_fvs.m - encode all vectors with pretrained GMMs.	apply_metrics.m - apply the learned metrics to Fisher vectors.
+
+
+./backend/facedet - folder containing all files required for face detection, processing images, and getting cropped images of the faces.
+
+
+./obtain_matrices - folder containing all files required for obtaining matrices for training the whole system
+
+	pipeline_descrs.m - pipeline for obtaining descriptors.
+	get_sifts_train_v2.m - extract SIFTs densely. Here we obtain ~36K 128-dimensional descriptors per face.	get_random_sifts.m - randomly select 100,000 SIFTs from the set.
+	conduct_pca.m - conducting PCA to get the compression matrix so that 128-d --> 64-d (on these randomly selected SIFTs).
+	apply_pca.m - apply the obtained matrix of PCA (to some new 100,000 SIFTs)	train_gmms.m - learn GMMs.	get_all_pcas.m - apply the obtained matrix of PCA (to all SIFTs and all images).
+	encode_fvs.m - encode all vectors with obtained GMMs.
+	init_W.m - initialize matrix W with whitening PCA.
+	dim_reduction.m - run stochastic sub-gradient descend and learn the metrics.	get_params.m - function for getting parameters of certain people (in the training or test set).
+	count_metrics.m - learn several metrics with different parameters.
+	read_files.m - read data required for training from text files in ./data_lfw.
+	update_FV_to_people.m - process the data read used read_files.m.
+
+
+./additional_scripts - folder containing additional files that were used to obtain some matrices for training purposes.
+
+	get_sifts_croppedfaces.m - compute and save SIFTs for images from the specific folder.
+	count_dense_sifts200.m - apply PCA to precomputed SIFTs for images from the specific folder and save them.	count_fvs200.m - compute and save Fisher vectors for images from the specific folder.	get_people_FVs.m - make a matrix of correspondence of people's names to their number of Fisher vector (required for training)
+
+
+./data_lfw - folder containing text files with names of people in the LFW dataset used for training and test purposes 
+
+	peopleDevTrain.txt - development training set (people and a number of their images)	peopleDevTest.txt - development testing set (people and a number of their images)
+	pairsDevTrain.txt - development training set (pairs of people and numbers of their images correspondingly)	pairsDevTest.txt - development testing set (pairs of people and numbers of their images correspondingly)
+
